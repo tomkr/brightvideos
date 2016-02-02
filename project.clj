@@ -10,7 +10,11 @@
                  [org.clojure/clojurescript "1.7.170"]
                  [org.clojure/core.async "0.2.374"
                   :exclusions [org.clojure/tools.reader]]
-                 [reagent "0.5.1"]]
+                 [reagent "0.5.1"]
+                 [devcards "0.2.1-6"]
+                 [cljsjs/react "0.14.3-0"]
+                 [cljsjs/react-dom "0.14.3-1"]
+                 [cljsjs/react-dom-server "0.14.3-0"]]
 
   :plugins [[lein-figwheel "0.5.0-6"]
             [lein-cljsbuild "1.1.2" :exclusions [[org.clojure/clojure]]]]
@@ -19,27 +23,33 @@
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 
-  :cljsbuild {:builds
-              [{:id "dev"
-                :source-paths ["src"]
-
-                ;; If no code is to be run, set :figwheel true for continued automagical reloading
-                :figwheel {:on-jsload "brightvideos.core/on-js-reload"}
-
-                :compiler {:main brightvideos.core
-                           :asset-path "js/compiled/out"
-                           :output-to "resources/public/js/compiled/brightvideos.js"
-                           :output-dir "resources/public/js/compiled/out"
-                           :source-map-timestamp true}}
-               ;; This next build is an compressed minified build for
-               ;; production. You can build this with:
-               ;; lein cljsbuild once min
-               {:id "min"
-                :source-paths ["src"]
-                :compiler {:output-to "resources/public/js/compiled/brightvideos.js"
-                           :main brightvideos.core
-                           :optimizations :advanced
-                           :pretty-print false}}]}
+  :cljsbuild {
+    :builds [
+      { :id "devcards"
+        :source-paths ["src"]
+        :figwheel { :devcards true } ;; <- note this
+        :compiler {
+          :main brightvideos.core
+          :asset-path "js/compiled/devcards_out"
+          :output-to  "resources/public/js/compiled/brightvideos_devcards.js"
+          :output-dir "resources/public/js/compiled/devcards_out"
+          :source-map-timestamp true }}
+      { :id "dev"
+        :source-paths ["src"]
+        :figwheel {:on-jsload "brightvideos.core/on-js-reload"}
+        :compiler {
+          :main brightvideos.core
+          :asset-path "js/compiled/out"
+          :output-to "resources/public/js/compiled/brightvideos.js"
+          :output-dir "resources/public/js/compiled/out"
+          :source-map-timestamp true}}
+      { :id "min"
+        :source-paths ["src"]
+        :compiler {
+          :output-to "resources/public/js/compiled/brightvideos.js"
+          :main brightvideos.core
+          :optimizations :advanced
+          :pretty-print false}}]}
 
   :figwheel {;; :http-server-root "public" ;; default and assumes "resources"
              ;; :server-port 3449 ;; default

@@ -1,2 +1,7 @@
 /* some style */
 
+.video__item {
+  border: 1px solid #CCC;
+  padding: 8px 15px;
+  list-style: none;
+}
