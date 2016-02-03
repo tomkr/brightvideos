@@ -76,10 +76,14 @@
                                             assoc :description
                                             (.-target.value e)))}]]
     [:p
-      [:button {:on-click (fn [e] (append-videos form-input-state))}
+      [:button {:on-click (fn [e] (append-videos form-input-state)
+                                  (swap! form-input-state
+                                    assoc :description
+                                    "")
+                                  (swap! form-input-state
+                                    assoc :url
+                                    ""))}
                "Versturen"]]])
-
-
 
 (main)
 
