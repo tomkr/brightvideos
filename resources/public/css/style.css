@@ -7,17 +7,33 @@
   line-height: 26px;
 }
 
+.clearleft {
+  clear: left;
+}
+
 .description {
-  display: inline-block;
+  margin-left: 20px;
+  float: left;
+  line-height: 50px;
 }
 
 .votes {
-  display: inline-block;
+  float: left;
 }
 
 .votes i {
   font-size: 20px;
   -webkit-user-select: none;
-  margin-right: 10px;
   color: #777;
+  font-size: 20px;
+}
+
+.votes__plus {
+  margin-right: 10px;
+}
+
+.votes__score {
+  text-align: center;
+  color: #777;
+  font-size: 26px;
 }

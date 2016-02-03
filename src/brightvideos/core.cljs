@@ -2,7 +2,7 @@
   (:require
     [reagent.core :as reagent :refer [atom cursor]]
     [devcards.core]
-    [brightvideos.votes :refer [upvote-button downvote-button]])
+    [brightvideos.votes :refer [votes]])
   (:require-macros [devcards.core :as dc :refer [defcard-rg]]))
 
 (enable-console-print!)
@@ -20,11 +20,10 @@
 ; A single video item component
 (defn video-item [video]
   [:li.video-item
-    [:div.votes
-      [upvote-button (cursor video [:score])]
-      [downvote-button (cursor video [:score])]]
+    [votes (cursor video [:score])]
     [:div.description
-      [:a {:href (:url @video) :target "_blank"} (:title @video)]]])
+      [:a {:href (:url @video) :target "_blank"} (:title @video)]]
+    [:div.clearleft]])
 
 ; A list of video items
 (defn video-list [state]

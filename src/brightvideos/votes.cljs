@@ -7,25 +7,36 @@
 ; Upvote button
 (defn upvote-button [score]
   [:a {:on-click #(swap! score inc)}
-    [:i.fa.fa-plus]])
+    [:i.fa.fa-plus.votes__plus]])
 
 ; Downvote button
 (defn downvote-button [score]
   [:a {:on-click #(swap! score dec)}
     [:i.fa.fa-minus]])
 
-(defonce upvote-score (atom 0))
+; Voting control
+(defn votes [score]
+  [:div.votes
+    [upvote-button score]
+    [downvote-button score]
+    [:div.votes__score @score]])
+
+(defonce score (atom 0))
+
+(defcard-rg votes
+  "## Complete voting control"
+  [votes score]
+  score
+  {:inspect-data true :history true})
 
 (defcard-rg upvote-button
   "## A button for upvoting"
-  [upvote-button upvote-score]
-  upvote-score
+  [upvote-button score]
+  score
   {:inspect-data true :history true})
-
-(defonce downvote-score (atom 20))
 
 (defcard-rg downvote-button
   "## A button for downvoting"
-  [downvote-button downvote-score]
-  downvote-score
+  [downvote-button score]
+  score
   {:inspect-data true :history true})
