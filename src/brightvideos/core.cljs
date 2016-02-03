@@ -38,6 +38,9 @@
     (reagent/render-component [video-list app-state]
       (. js/document (getElementById "app")))))
 
+(defn append-videos [video-form-input]
+  (println @video-form-input))
+
 (defn video-form-input [form-input-state]
   [:div
     [:p
@@ -56,7 +59,10 @@
                   :value (:description @form-input-state)
                   :on-change (fn [e] (swap! form-input-state
                                             assoc :description
-                                            (.-target.value e)))}]]])
+                                            (.-target.value e)))}]]
+    [:p
+      [:button {:on-click (fn [e] (append-videos form-input-state))}
+               "Versturen"]]])
 
 (defn video-submit-form []
   (let [form-input-state (atom {:url         ""
