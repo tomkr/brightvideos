@@ -1,7 +1,23 @@
 /* some style */
 
-.video__item {
+.video-item {
   border: 1px solid #CCC;
   padding: 8px 15px;
   list-style: none;
+  line-height: 26px;
+}
+
+.description {
+  display: inline-block;
+}
+
+.votes {
+  display: inline-block;
+}
+
+.votes i {
+  font-size: 20px;
+  -webkit-user-select: none;
+  margin-right: 10px;
+  color: #777;
 }

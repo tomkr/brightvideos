@@ -18,18 +18,22 @@
 
 ; Upvote button
 (defn upvote-button [score]
-  [:a {:on-click #(swap! score inc)} "Up"])
+  [:a {:on-click #(swap! score inc)}
+    [:i.fa.fa-plus]])
 
 ; Downvote button
 (defn downvote-button [score]
-  [:a {:on-click #(swap! score dec)} "Down"])
+  [:a {:on-click #(swap! score dec)}
+    [:i.fa.fa-minus]])
 
 ; A single video item component
 (defn video-item [video]
-  [:li.video__item
-    [upvote-button (cursor video [:score])]
-    [downvote-button (cursor video [:score])]
-    [:a {:href (:url @video) :target "_blank"} (:title @video)]])
+  [:li.video-item
+    [:div.votes
+      [upvote-button (cursor video [:score])]
+      [downvote-button (cursor video [:score])]]
+    [:div.description
+      [:a {:href (:url @video) :target "_blank"} (:title @video)]]])
 
 ; A list of video items
 (defn video-list [state]
