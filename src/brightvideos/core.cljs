@@ -38,6 +38,32 @@
     (reagent/render-component [video-list app-state]
       (. js/document (getElementById "app")))))
 
+(defn video-form-input [form-input-state]
+  [:div
+    [:p
+      [:label "URL:"]
+      [:br]
+      [:input {:type "text"
+               :value (:url @form-input-state)
+               :on-change (fn [e] (swap! form-input-state
+                                         assoc :url
+                                         (.-target.value e)))}]]
+    [:p
+      [:label "Toelichting:"]
+      [:br]
+      [:textarea {:rows "5"
+                  :cols "80"
+                  :value (:description @form-input-state)
+                  :on-change (fn [e] (swap! form-input-state
+                                            assoc :description
+                                            (.-target.value e)))}]]])
+
+(defn video-submit-form []
+  (let [form-input-state (atom {:url         ""
+                                :description ""})]
+    [video-form-input form-input-state]))
+
+
 (main)
 
 ; Devcards
@@ -57,3 +83,8 @@
   [video-item single-video-state]
   single-video-state
   {:inspect-data true :history true })
+
+(defcard-rg video-submission
+  "## Form to submit a video"
+  [video-submit-form]
+  {:inspect-data true :history true})
