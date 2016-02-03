@@ -4,15 +4,23 @@
     [devcards.core])
   (:require-macros [devcards.core :as dc :refer [defcard-rg]]))
 
-; (enable-console-print!)
+(enable-console-print!)
 
 ;; define your app data so that it doesn't get over-written on reload
-(defonce app-state (atom {:videos [{
-                                    :title "test" :score 10}]}))
+(defonce app-state (atom
+  { :videos {
+    1 { :title "test"
+        :url "http://www.youtube.com"
+        :score 10 }
+    2 { :title "test 2"
+        :url "http://www.twitch.tv"
+        :score 8 }}}))
 
+; Upvote button
 (defn upvote-button [score]
   [:a {:on-click #(swap! score inc)} "Up"])
 
+; Downvote button
 (defn downvote-button [score]
   [:a {:on-click #(swap! score dec)} "Down"])
 
@@ -28,8 +36,8 @@
   [:div
     [:h1 "Brightvideos"]
     [:ul
-      (for [video (:videos @state)]
-        [video-item video])]])
+      (for [[index _] (:videos @state)]
+        ^{:key index}[video-item (cursor state [:videos index])])]])
 
 (defn main []
   (if-let [node (.getElementById js/document "app")]
@@ -39,6 +47,12 @@
 (main)
 
 ; Devcards
+(defcard-rg video-list
+  "## A video item list"
+  [video-list app-state]
+  app-state
+  {:inspect-data true :history true })
+
 (defonce single-video-state (atom
   { :title "test"
     :url "http://www.youtube.com"
