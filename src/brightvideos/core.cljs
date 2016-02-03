@@ -1,7 +1,8 @@
 (ns brightvideos.core
   (:require
     [reagent.core :as reagent :refer [atom cursor]]
-    [devcards.core])
+    [devcards.core]
+    [brightvideos.votes :refer [upvote-button downvote-button]])
   (:require-macros [devcards.core :as dc :refer [defcard-rg]]))
 
 (enable-console-print!)
@@ -15,16 +16,6 @@
     2 { :title "test 2"
         :url "http://www.twitch.tv"
         :score 8 }}}))
-
-; Upvote button
-(defn upvote-button [score]
-  [:a {:on-click #(swap! score inc)}
-    [:i.fa.fa-plus]])
-
-; Downvote button
-(defn downvote-button [score]
-  [:a {:on-click #(swap! score dec)}
-    [:i.fa.fa-minus]])
 
 ; A single video item component
 (defn video-item [video]
@@ -67,19 +58,3 @@
   [video-item single-video-state]
   single-video-state
   {:inspect-data true :history true })
-
-(defonce upvote-score (atom 0))
-
-(defcard-rg upvote-button
-  "## A button for upvoting"
-  [upvote-button upvote-score]
-  upvote-score
-  {:inspect-data true :history true})
-
-(defonce downvote-score (atom 20))
-
-(defcard-rg downvote-button
-  "## A button for downvoting"
-  [downvote-button downvote-score]
-  downvote-score
-  {:inspect-data true :history true})
