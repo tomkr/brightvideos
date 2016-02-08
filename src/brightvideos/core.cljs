@@ -25,12 +25,15 @@
       [:a {:href (:url @video) :target "_blank"} (:title @video)]]
     [:div.clearleft]])
 
+(defn video-list-sorter [item]
+  (:score (second item)))
+
 ; A list of video items
 (defn video-list [state]
   [:div
     [:h1 "Brightvideos"]
     [:ul
-      (for [[index _] (:videos @state)]
+      (for [[index _] (sort-by video-list-sorter > (:videos @state))]
         ^{:key index}[video-item (cursor state [:videos index])])]])
 
 (defn main []
