@@ -1,7 +1,39 @@
 /* some style */
 
-.video__item {
+.video-item {
   border: 1px solid #CCC;
   padding: 8px 15px;
   list-style: none;
+  line-height: 26px;
+}
+
+.clearleft {
+  clear: left;
+}
+
+.description {
+  margin-left: 20px;
+  float: left;
+  line-height: 50px;
+}
+
+.votes {
+  float: left;
+}
+
+.votes i {
+  font-size: 20px;
+  -webkit-user-select: none;
+  color: #777;
+  font-size: 20px;
+}
+
+.votes__plus {
+  margin-right: 10px;
+}
+
+.votes__score {
+  text-align: center;
+  color: #777;
+  font-size: 26px;
 }
