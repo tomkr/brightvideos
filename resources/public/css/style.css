@@ -17,8 +17,12 @@
   line-height: 50px;
 }
 
-.votes {
+.item__votes {
   float: left;
+}
+
+.votes {
+  text-align: center;
 }
 
 .votes i {
@@ -33,7 +37,6 @@
 }
 
 .votes__score {
-  text-align: center;
   color: #777;
   font-size: 26px;
 }

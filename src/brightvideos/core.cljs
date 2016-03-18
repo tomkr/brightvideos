@@ -20,7 +20,8 @@
 ; A single video item component
 (defn video-item [video]
   [:li.video-item
-    [votes (cursor video [:score])]
+    [:div.item__votes
+      [votes (cursor video [:score])]]
     [:div.description
       [:a {:href (:url @video) :target "_blank"} (:title @video)]]
     [:div.clearleft]])
