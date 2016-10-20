@@ -38,6 +38,53 @@
     (reagent/render-component [video-list app-state]
       (. js/document (getElementById "app")))))
 
+; append the video list
+(declare video-submit-form)
+(declare video-form-input)
+
+(defn update-videos [f args]
+  (apply swap! app-state update-in [:videos] f args))
+
+(defn append-videos [video-form-input]
+  (let [last-index (last (keys (:videos @app-state)))]
+    (update-videos conj {(+ 1 last-index) @video-form-input})
+    ))
+
+(defn video-submit-form []
+  (let [form-input-state (atom {:url         ""
+                                :description ""
+                                :score       0})]
+    [video-form-input form-input-state]))
+
+(defn video-form-input [form-input-state]
+  [:div
+    [:p
+      [:label "URL:"]
+      [:br]
+      [:input {:type "text"
+               :value (:url @form-input-state)
+               :on-change (fn [e] (swap! form-input-state
+                                         assoc :url
+                                         (.-target.value e)))}]]
+    [:p
+      [:label "Toelichting:"]
+      [:br]
+      [:textarea {:rows "5"
+                  :cols "80"
+                  :value (:description @form-input-state)
+                  :on-change (fn [e] (swap! form-input-state
+                                            assoc :description
+                                            (.-target.value e)))}]]
+    [:p
+      [:button {:on-click (fn [e] (append-videos form-input-state)
+                                  (swap! form-input-state
+                                    assoc :description
+                                    "")
+                                  (swap! form-input-state
+                                    assoc :url
+                                    ""))}
+               "Versturen"]]])
+
 (main)
 
 ; Devcards
@@ -57,3 +104,8 @@
   [video-item single-video-state]
   single-video-state
   {:inspect-data true :history true })
+
+(defcard-rg video-submission
+  "## Form to submit a video"
+  [video-submit-form]
+  {:inspect-data true :history true})
